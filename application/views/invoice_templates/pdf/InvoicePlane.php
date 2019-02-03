@@ -16,35 +16,42 @@
 
     <div id="client">
         <div>
-            <b><?php _htmlsc(format_client($invoice)); ?></b>
+            <b><?php _htmlsc(format_client($invoice)); ?>　御中</b>
         </div>
+        <!-- 税 -->
         <?php if ($invoice->client_vat_id) {
             echo '<div>' . trans('vat_id_short') . ': ' . $invoice->client_vat_id . '</div>';
         }
         if ($invoice->client_tax_code) {
             echo '<div>' . trans('tax_code_short') . ': ' . $invoice->client_tax_code . '</div>';
         }
+        // 税
+
+        // 郵便番号
+        if ($invoice->client_zip) {
+            echo htmlsc($invoice->client_zip);
+        }
+        if ($invoice->client_city || $invoice->client_state) {
+            echo '<div>';
+            if ($invoice->client_state) {
+                echo htmlsc($invoice->client_state) . ' ';
+            }
+            if ($invoice->client_city) {
+                echo htmlsc($invoice->client_city) . ' ';
+            }
+            echo '</div>';
+        }
+
         if ($invoice->client_address_1) {
             echo '<div>' . htmlsc($invoice->client_address_1) . '</div>';
         }
         if ($invoice->client_address_2) {
             echo '<div>' . htmlsc($invoice->client_address_2) . '</div>';
         }
-        if ($invoice->client_city || $invoice->client_state || $invoice->client_zip) {
-            echo '<div>';
-            if ($invoice->client_city) {
-                echo htmlsc($invoice->client_city) . ' ';
-            }
-            if ($invoice->client_state) {
-                echo htmlsc($invoice->client_state) . ' ';
-            }
-            if ($invoice->client_zip) {
-                echo htmlsc($invoice->client_zip);
-            }
-            echo '</div>';
-        }
+
         if ($invoice->client_country) {
-            echo '<div>' . get_country_name(trans('cldr'), $invoice->client_country) . '</div>';
+            // 国名入れない
+            // echo '<div>' . get_country_name(trans('cldr'), $invoice->client_country) . '</div>';
         }
 
         echo '<br/>';
@@ -56,11 +63,27 @@
     </div>
     <div id="company">
         <div><b><?php _htmlsc($invoice->user_name); ?></b></div>
+        <!-- 税 -->
         <?php if ($invoice->user_vat_id) {
             echo '<div>' . trans('vat_id_short') . ': ' . $invoice->user_vat_id . '</div>';
         }
         if ($invoice->user_tax_code) {
             echo '<div>' . trans('tax_code_short') . ': ' . $invoice->user_tax_code . '</div>';
+        }
+
+        if ($invoice->user_zip) {
+            echo htmlsc($invoice->user_zip);
+        }
+        if ($invoice->user_city || $invoice->user_state) {
+            echo '<div>';
+            if ($invoice->user_state) {
+                echo htmlsc($invoice->user_state) . ' ';
+            }
+            if ($invoice->user_city) {
+                echo htmlsc($invoice->user_city) . ' ';
+            }
+
+            echo '</div>';
         }
         if ($invoice->user_address_1) {
             echo '<div>' . htmlsc($invoice->user_address_1) . '</div>';
@@ -68,21 +91,9 @@
         if ($invoice->user_address_2) {
             echo '<div>' . htmlsc($invoice->user_address_2) . '</div>';
         }
-        if ($invoice->user_city || $invoice->user_state || $invoice->user_zip) {
-            echo '<div>';
-            if ($invoice->user_city) {
-                echo htmlsc($invoice->user_city) . ' ';
-            }
-            if ($invoice->user_state) {
-                echo htmlsc($invoice->user_state) . ' ';
-            }
-            if ($invoice->user_zip) {
-                echo htmlsc($invoice->user_zip);
-            }
-            echo '</div>';
-        }
+
         if ($invoice->user_country) {
-            echo '<div>' . get_country_name(trans('cldr'), $invoice->user_country) . '</div>';
+            // echo '<div>' . get_country_name(trans('cldr'), $invoice->user_country) . '</div>';
         }
 
         echo '<br/>';
